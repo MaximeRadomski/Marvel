@@ -7,13 +7,14 @@ namespace Marvel
 {
 	public partial class App : Application
 	{
+        public static MainPage MainMasterPage = new MainPage();
 
-		public App ()
+        public App ()
 		{
 			InitializeComponent();
 
 
-            MainPage = new MainPage();
+            MainPage = MainMasterPage;
         }
 
 		protected override void OnStart ()
