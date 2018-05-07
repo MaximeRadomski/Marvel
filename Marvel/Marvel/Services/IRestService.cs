@@ -9,6 +9,6 @@ namespace Marvel.Services
 {
     public interface IRestService
     {
-        Task<List<Hero>> LoadHeroesRange(int rangeStart);
+        Task<List<Hero>> LoadHeroesRange(int rangeStart, int limit);
     }
 }

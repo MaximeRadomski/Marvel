@@ -20,6 +20,7 @@ namespace Marvel.ViewModels
         public Hero SampleHero { get; set; }
 
         private int _listStart;
+        private int _listLimit;
         private INavigation _navigation;
         private readonly IRestService _restService;
 
@@ -28,12 +29,13 @@ namespace Marvel.ViewModels
             _restService = new RestService();
             _navigation = navigation;
             _listStart = 0;
+            _listLimit = 50;
             Task.Run(async () => await LoadItems());
         }
 
         public async Task LoadItems()
         {
-            Heroes = await _restService.LoadHeroesRange(_listStart);
+            Heroes = await _restService.LoadHeroesRange(_listStart, _listLimit);
             SampleHero = Heroes[0];
         }
 

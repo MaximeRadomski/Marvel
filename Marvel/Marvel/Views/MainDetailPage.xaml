@@ -12,8 +12,9 @@
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Orientation="Horizontal">
-                            <Image Source="{Binding .Thumbnail.FullPath}" HeightRequest="100" WidthRequest="100" Aspect="AspectFill"/>
-                            <Label Text="{Binding .Name}"></Label>
+                            <Image Source="{Binding .Thumbnail.FullPath}" HeightRequest="100" WidthRequest="100" Aspect="AspectFill" HorizontalOptions="Start"/>
+                            <Label Text="{Binding .Name}" HorizontalOptions="Start" VerticalTextAlignment="Center"/>
+                            <Label Text="{Binding .Id}" HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center" FontSize="8"/>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

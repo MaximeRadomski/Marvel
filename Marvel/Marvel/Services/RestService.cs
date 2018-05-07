@@ -17,10 +17,10 @@ namespace Marvel.Services
         private const string Hash = "&hash=8d012c90ef8dfc4c1e53008a78ab3f9b";
         private string _parameters = "";
 
-        public async Task<List<Hero>> LoadHeroesRange(int rangeStart)
+        public async Task<List<Hero>> LoadHeroesRange(int rangeStart, int limit = 20)
         {
             HttpResponseMessage response = new HttpResponseMessage();
-            _parameters = "&offset="+rangeStart;
+            _parameters = "&offset="+rangeStart+"&limit="+limit;
             string completeUrl = Url + TimeStamp + Apikey + Hash + _parameters;
             try
             {
