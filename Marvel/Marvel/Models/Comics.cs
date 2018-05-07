@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Marvel.Models
 {
-    class Comics
+    public class Comics
     {
         [JsonProperty("id")]
         public int Id { get; set; }

@@ -5,11 +5,17 @@ using System.Text;
 
 namespace Marvel.Models
 {
-    class ImageUrl
+    public class ImageUrl
     {
         [JsonProperty("path")]
         public string Path { get; set; }
         [JsonProperty("extension")]
         public string Extension { get; set; }
+
+        public string FullPath
+        {
+            get => Path + "." + Extension;
+            set { }
+        }
     }
 }

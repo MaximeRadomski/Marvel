@@ -11,13 +11,11 @@ using Xamarin.Forms.Xaml;
 namespace Marvel.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MainPageDetail : ContentPage
+    public partial class MainDetailPage : ContentPage
     {
-        public MainPageDetail()
+        public MainDetailPage()
         {
-            MainDetailPageModel pm = new MainDetailPageModel();
-            pm.Navigation = Navigation;
-            BindingContext = pm;
+            BindingContext = new MainDetailPageModel(Navigation);
             InitializeComponent();
         }
     }

@@ -1,21 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Marvel.Views.MainPageDetail"
+             xmlns:controls="clr-namespace:Marvel.Controls;assembly=Marvel"
+             x:Class="Marvel.Views.MainDetailPage"
              Title="Detail">
   <StackLayout Padding="10">
     <Label Text="{Binding NbHeroesFake}"/>
     <Button BackgroundColor="Red" TextColor="White" Text="Test Kiwi" Command="{Binding TestCallCommand}"></Button>
-        <ListView ItemsSource="{Binding Heroes}">
+        <controls:BetterListView ItemsSource="{Binding Heroes}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="{Binding .Thumbnail.FullPath}" HeightRequest="100" WidthRequest="100" Aspect="AspectFill"/>
                             <Label Text="{Binding .Name}"></Label>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
-        </ListView>
+        </controls:BetterListView>
     </StackLayout>
 </ContentPage>
