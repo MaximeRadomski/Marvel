@@ -90,6 +90,7 @@ namespace Marvel.ViewModels
                 SearchName = null;
                 _listStart = 0;
                 _listLimit = 25;
+                await Task.Run(async () => await LoadItems());
             }
         });
 

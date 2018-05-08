@@ -15,6 +15,7 @@ namespace Marvel.ViewModels
         public List<Comic> CustomComicsList { get; set; }
         public HeroDetails Hero { get; set; }
         public bool Loading { get; set; }
+        public bool IsFavorite { get; set; }
 
         private int _heroId;
         private INavigation _navigation;
@@ -55,6 +56,11 @@ namespace Marvel.ViewModels
             if (((Comic)item).ResourceUri == null)
                 return;
             Device.OpenUri(new Uri("https://www.google.com/search?q=Marvel " + ((Comic) item).Name));
+            return;
+        });
+
+        public ICommand AddRemoveFavoriteCommand => new Command(async () =>
+        {
             return;
         });
     }
