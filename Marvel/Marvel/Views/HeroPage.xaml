@@ -1,12 +1,53 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Marvel.Views.HeroPage">
+             xmlns:controls="clr-namespace:Marvel.Controls;assembly=Marvel"
+             xmlns:converters="clr-namespace:Marvel.Converters;assembly=Marvel"
+             x:Class="Marvel.Views.HeroPage"
+             Title="{Binding Hero.Name}">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ScrollView>
+            <!--MAIN STACKLAYOUT-->
+            <StackLayout Margin="0" Padding="0" Spacing="0">
+                <!--LOADER-->
+                <StackLayout HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" IsVisible="{Binding Loading}">
+                    <ActivityIndicator Color="#Af1212" IsRunning="{Binding Loading}" IsVisible="{Binding Loading}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                </StackLayout>
+                <!--CONTENT-->
+                <StackLayout Padding="10" IsVisible="{Binding Loading, Converter={converters:NegateBooleanConverter}}">
+                    <!--MAIN PICTURE-->
+                    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="Start">
+                        <StackLayout Padding="10" BackgroundColor="#C61720">
+                            <Image Source="{Binding Hero.Thumbnail.FullPath}" Aspect="AspectFit"></Image>
+                        </StackLayout>
+                    </StackLayout>
+                    <!--NAME & ID-->
+                    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="Start">
+                        <Label Text="{Binding Hero.Name}" HorizontalOptions="Center" VerticalOptions="EndAndExpand" VerticalTextAlignment="Center" FontSize="20" TextColor="#8C1010" FontAttributes="Bold"/>
+                        <Label Text="{Binding Hero.Id}" HorizontalOptions="Center" VerticalOptions="Center" VerticalTextAlignment="Center" FontSize="12"/>
+                    </StackLayout>
+                    <!--DESCRIPTION-->
+                    <StackLayout HorizontalOptions="Fill" VerticalOptions="Start" Margin="10">
+                        <Label Text=" Description" FontSize="18" TextColor="White" FontAttributes="Bold" BackgroundColor="#C61720"/>
+                        <Label Text="{Binding Hero.Description}" HorizontalOptions="Center" VerticalOptions="StartAndExpand" VerticalTextAlignment="Center" FontSize="16"/>
+                    </StackLayout>
+                    <!--COMCICS-->
+                    <StackLayout HorizontalOptions="Fill" VerticalOptions="Start" Margin="10">
+                        <Label Text=" Comics Appearance" FontSize="18" TextColor="White" FontAttributes="Bold" BackgroundColor="#C61720"/>
+                        <controls:BetterListView ItemsSource="{Binding CustomComicsList}" ItemClickCommand="{Binding OpenComicsUrlCommand}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <StackLayout Orientation="Horizontal" HeightRequest="100" Padding="10">
+                                            <Label Text="{Binding .Name}" HorizontalOptions="Center" VerticalOptions="StartAndExpand" VerticalTextAlignment="Center" FontSize="16"/>
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </controls:BetterListView>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

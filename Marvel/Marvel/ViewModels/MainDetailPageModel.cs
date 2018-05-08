@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -17,10 +18,12 @@ namespace Marvel.ViewModels
 {
     class MainDetailPageModel : ContentPage
     {
-        public List<Hero> Heroes { get; set; }
+        public List<HeroListItem> Heroes { get; set; }
         public bool Loading { get; set; }
+        public bool IsSearchingByName { get; set; }
         public int FirstItem { get; set; }
         public int LastItem { get; set; }
+        public string SearchName { get; set; }
 
         private int _listStart;
         private int _listLimit;
@@ -33,28 +36,33 @@ namespace Marvel.ViewModels
             _navigation = navigation;
             _listStart = 0;
             _listLimit = 25;
-            SetFirstAndLast();
+            SearchName = null;
             Task.Run(async () => await LoadItems());
         }
 
         private void SetFirstAndLast()
         {
             FirstItem = _listStart + 1;
-            LastItem = _listStart + _listLimit;
+            if (Heroes != null && Heroes.Count > 0)
+                LastItem = _listStart + Heroes.Count;
+            else
+                LastItem = _listStart + _listLimit;
         }
 
         public async Task LoadItems()
         {
             Loading = true;
-            Heroes = await _restService.LoadHeroesRange(_listStart, _listLimit);
+            Heroes = await _restService.LoadHeroesRange(_listStart, _listLimit, SearchName);
             Loading = false;
+            SetFirstAndLast();
         }
 
         public ICommand NextPageCommand => new Command(async () =>
         {
-            _listStart += _listLimit;
-            FirstItem = _listStart + 1;
-            LastItem = _listStart + _listLimit;
+            if (Heroes.Count == _listLimit)
+                _listStart += _listLimit;
+            else
+                return;
             await Task.Run(async () => await LoadItems());
         });
 
@@ -62,13 +70,34 @@ namespace Marvel.ViewModels
         {
             if (_listStart - _listLimit >= 0)
                 _listStart -= _listLimit;
-            SetFirstAndLast();
+            else
+                return;
             await Task.Run(async () => await LoadItems());
         });
 
         public ICommand PushHeroDetailsCommand => new Command<object>(async (item) =>
+        {
+            await _navigation.PushAsync(new HeroPage(((HeroListItem)item).Id));
+        });
+
+        public ICommand SearchByNameEnableCommand => new Command(async () =>
+        {
+            if (IsSearchingByName == false)
+                IsSearchingByName = true;
+            else
             {
-                await _navigation.PushAsync(new HeroPage(((Hero)item).Id));
-            });
+                IsSearchingByName = false;
+                SearchName = null;
+                _listStart = 0;
+                _listLimit = 25;
+            }
+        });
+
+        public ICommand SearchByNameCommand => new Command(async () =>
+        {
+            _listStart = 0;
+            _listLimit = 25;
+            await Task.Run(async () => await LoadItems());
+        });
     }
 }

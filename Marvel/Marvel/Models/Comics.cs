@@ -7,9 +7,13 @@ namespace Marvel.Models
 {
     public class Comics
     {
-        [JsonProperty("id")]
-        public int Id { get; set; }
-        [JsonProperty("title")]
-        public string Title { get; set; }
+        [JsonProperty("available")]
+        public string Available { get; set; }
+        [JsonProperty("returned")]
+        public string Returned { get; set; }
+        [JsonProperty("collectionURI")]
+        public string CollectionUri { get; set; }
+        [JsonProperty("items")]
+        public List<Comic> Items { get; set; }
     }
 }
