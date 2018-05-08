@@ -16,8 +16,8 @@ namespace Marvel.ViewModels
         {
             MenuItems = new ObservableCollection<MainPageMenuItem>(new[]
                 {
-                    new MainPageMenuItem { Id = 0, Title = "Heroes", ImagePath = "icon.png", TargetType = typeof(ContentPage)},
-                    new MainPageMenuItem { Id = 1, Title = "Favorites", ImagePath = "icon.png", TargetType = typeof(ContentPage)},
+                    new MainPageMenuItem { Id = 0, Title = "Heroes", ImagePath = "MenuIcon01.png", TargetType = typeof(ContentPage)},
+                    new MainPageMenuItem { Id = 1, Title = "Favorites", ImagePath = "MenuIcon02.png", TargetType = typeof(ContentPage)},
                 });
         }
 
@@ -36,7 +36,6 @@ namespace Marvel.ViewModels
         public ICommand ReturnToMainmenuCommand => new Command(async () =>
         {
             await App.MainMasterPage.Detail.Navigation.PopToRootAsync();
-            //await App.MainMasterPage.Detail.Navigation.PushAsync(new MainDetailPage());
             App.MainMasterPage.IsPresented = false;
         });
     }

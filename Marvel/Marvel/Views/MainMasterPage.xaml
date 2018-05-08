@@ -10,11 +10,12 @@
                 SeparatorVisibility="None"
                 HasUnevenRows="true"
                 ItemsSource="{Binding MenuItems}"
-                BackgroundColor="Black"
-                ItemClickCommand="{Binding ItemClickCommand}">
+                BackgroundColor="White"
+                ItemClickCommand="{Binding ItemClickCommand}"
+                Margin="0,0,-1,0">
             <ListView.Header>
-                <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="White">
-                    <Image HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Source="xamarin_logo.png">
+                <StackLayout HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" BackgroundColor="#C61720" Padding="20,0,25,0" Margin="0,0,-1,0" Spacing="0" HeightRequest="200">
+                    <Image HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Source="splash.png">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ReturnToMainmenuCommand}"/>
                         </Image.GestureRecognizers>
@@ -26,7 +27,7 @@
                     <ViewCell>
                         <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand" Orientation="Horizontal" HeightRequest="45">
                             <Image HorizontalOptions="Start" VerticalOptions="Center" Source="{Binding ImagePath}"/>
-                            <Label VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" Text="{Binding Title}" FontSize="18" TextColor="White" Margin="10,0"/>
+                            <Label VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" Text="{Binding Title}" FontSize="18" TextColor="Black" Margin="10,0"/>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

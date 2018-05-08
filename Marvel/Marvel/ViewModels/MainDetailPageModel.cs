@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Marvel.Services;
+using Marvel.Views;
 using Xamarin.Forms;
 
 namespace Marvel.ViewModels
@@ -17,7 +18,9 @@ namespace Marvel.ViewModels
     class MainDetailPageModel : ContentPage
     {
         public List<Hero> Heroes { get; set; }
-        public Hero SampleHero { get; set; }
+        public bool Loading { get; set; }
+        public int FirstItem { get; set; }
+        public int LastItem { get; set; }
 
         private int _listStart;
         private int _listLimit;
@@ -29,20 +32,43 @@ namespace Marvel.ViewModels
             _restService = new RestService();
             _navigation = navigation;
             _listStart = 0;
-            _listLimit = 50;
+            _listLimit = 25;
+            SetFirstAndLast();
             Task.Run(async () => await LoadItems());
+        }
+
+        private void SetFirstAndLast()
+        {
+            FirstItem = _listStart + 1;
+            LastItem = _listStart + _listLimit;
         }
 
         public async Task LoadItems()
         {
+            Loading = true;
             Heroes = await _restService.LoadHeroesRange(_listStart, _listLimit);
-            SampleHero = Heroes[0];
+            Loading = false;
         }
 
-        public ICommand TestCallCommand => new Command(async () =>
+        public ICommand NextPageCommand => new Command(async () =>
         {
-            _listStart += 19;
+            _listStart += _listLimit;
+            FirstItem = _listStart + 1;
+            LastItem = _listStart + _listLimit;
             await Task.Run(async () => await LoadItems());
         });
+
+        public ICommand PreviousPageCommand => new Command(async () =>
+        {
+            if (_listStart - _listLimit >= 0)
+                _listStart -= _listLimit;
+            SetFirstAndLast();
+            await Task.Run(async () => await LoadItems());
+        });
+
+        public ICommand PushHeroDetailsCommand => new Command<object>(async (item) =>
+            {
+                await _navigation.PushAsync(new HeroPage(((Hero)item).Id));
+            });
     }
 }
