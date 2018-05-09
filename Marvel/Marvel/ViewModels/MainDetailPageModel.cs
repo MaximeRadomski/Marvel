@@ -34,19 +34,29 @@ namespace Marvel.ViewModels
         {
             _restService = new RestService();
             _navigation = navigation;
-            _listStart = 0;
-            _listLimit = 25;
+            ResetStartAndLimit();
             SearchName = null;
             Task.Run(async () => await LoadItems());
         }
 
+        private void ResetStartAndLimit()
+        {
+            _listStart = 0;
+            _listLimit = 25;
+        }
+
         private void SetFirstAndLast()
         {
-            FirstItem = _listStart + 1;
             if (Heroes != null && Heroes.Count > 0)
+            {
+                FirstItem = _listStart + 1;
                 LastItem = _listStart + Heroes.Count;
+            }
             else
-                LastItem = _listStart + _listLimit;
+            {
+                FirstItem = 0;
+                LastItem = 0;
+            }
         }
 
         public async Task LoadItems()
@@ -88,16 +98,14 @@ namespace Marvel.ViewModels
             {
                 IsSearchingByName = false;
                 SearchName = null;
-                _listStart = 0;
-                _listLimit = 25;
+                ResetStartAndLimit();
                 await Task.Run(async () => await LoadItems());
             }
         });
 
         public ICommand SearchByNameCommand => new Command(async () =>
         {
-            _listStart = 0;
-            _listLimit = 25;
+            ResetStartAndLimit();
             await Task.Run(async () => await LoadItems());
         });
     }

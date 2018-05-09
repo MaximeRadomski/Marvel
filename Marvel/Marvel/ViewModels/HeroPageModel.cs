@@ -51,7 +51,7 @@ namespace Marvel.ViewModels
 
         }
 
-        public ICommand OpenComicsUrlCommand => new Command<object>(async (item) =>
+        public ICommand OpenComicsUrlCommand => new Command<object>((item) =>
         {
             if (((Comic)item).ResourceUri == null)
                 return;
