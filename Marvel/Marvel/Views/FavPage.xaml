@@ -1,12 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Marvel.Views.FavPage">
+             xmlns:controls="clr-namespace:Marvel.Controls;assembly=Marvel"
+             xmlns:converters="clr-namespace:Marvel.Converters;assembly=Marvel"
+             x:Class="Marvel.Views.FavPage"
+             Title="Favorites">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Padding="0">
+            <!--LOADER-->
+            <StackLayout HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" IsVisible="{Binding Loading}">
+                <ActivityIndicator Color="#Af1212" IsRunning="{Binding Loading}" IsVisible="{Binding Loading}" HorizontalOptions="Center" VerticalOptions="Center" />
+            </StackLayout>
+            <!--LIST-->
+            <controls:BetterListView ItemsSource="{Binding Heroes}" HorizontalOptions="Fill" VerticalOptions="Fill" RowHeight="100"
+                                     IsVisible="{Binding Loading, Converter={converters:NegateBooleanConverter}}"
+                                     ItemClickCommand="{Binding PushHeroDetailsCommand}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" HeightRequest="100" Padding="10">
+                                <Image Source="{Binding .Thumbnail}" HeightRequest="80" WidthRequest="80" Aspect="AspectFill" HorizontalOptions="Start" />
+                                <StackLayout HorizontalOptions="CenterAndExpand">
+                                    <Label Text="{Binding .Name}" HorizontalOptions="Center" VerticalOptions="EndAndExpand" VerticalTextAlignment="Center" FontSize="20" TextColor="#8C1010" FontAttributes="Bold" />
+                                    <Label Text="{Binding .Id}" HorizontalOptions="Center" VerticalOptions="StartAndExpand" VerticalTextAlignment="Center" FontSize="12" />
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </controls:BetterListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

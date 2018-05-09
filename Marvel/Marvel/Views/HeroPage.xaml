@@ -53,12 +53,15 @@
                     <StackLayout HorizontalOptions="Fill" VerticalOptions="Start" Margin="10">
                         <Label Text=" Like it ? Save it !" FontSize="18" TextColor="White" FontAttributes="Bold" BackgroundColor="#C61720"/>
                         <StackLayout Orientation="Horizontal">
-                            <Label Text="Favorite : " FontSize="16" HorizontalOptions="StartAndExpand" Margin="10"/>
-                            <StackLayout HorizontalOptions="End" HeightRequest="50" Padding="10">
-                                <Image Source="IconHeart02.png" Aspect="AspectFit" HeightRequest="30"/>
+                            <Label Text="Favorite : " FontSize="16" HorizontalOptions="StartAndExpand" Margin="10" />
+                            <StackLayout HorizontalOptions="End" HeightRequest="50" Padding="10" IsVisible="{Binding IsFavorite}">
+                                <Image Source="IconHeart01.png" Aspect="AspectFit" HeightRequest="30" />
+                            </StackLayout>
+                            <StackLayout HorizontalOptions="End" HeightRequest="50" Padding="10" IsVisible="{Binding IsFavorite, Converter={converters:NegateBooleanConverter}}">
+                                <Image Source="IconHeart02.png" Aspect="AspectFit" HeightRequest="30" />
                             </StackLayout>
                             <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddRemoveFavoriteCommand}"/>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddRemoveFavoriteCommand}" />
                             </StackLayout.GestureRecognizers>
                         </StackLayout>
                     </StackLayout>
