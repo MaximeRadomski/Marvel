@@ -20,10 +20,12 @@ namespace Marvel.ViewModels
         private int _heroId;
         private INavigation _navigation;
         private readonly IRestService _restService;
+        private readonly ILocalDatabaseService _localDatabaseService;
 
         public HeroPageModel(INavigation navigation, int heroId)
         {
             _restService = new RestService();
+            _localDatabaseService = new LocalDatabaseService();
             _navigation = navigation;
             _heroId = heroId;
             Task.Run(async () => await LoadItems());
@@ -35,6 +37,7 @@ namespace Marvel.ViewModels
             Hero = await _restService.LoadHeroDetails(_heroId);
             CustomComicsList = Hero.Comics.Items.GetRange(0, Hero.Comics.Items.Count >= 3 ? 3 : Hero.Comics.Items.Count);
             HandleErrorsOrMissingParameters();
+            IsHeroFavorite();
             Loading = false;
         }
 
@@ -48,7 +51,15 @@ namespace Marvel.ViewModels
                     Name = Hero.Name + " makes no appearance in any comics",
                     ResourceUri = null
                 });
+        }
 
+        private async void IsHeroFavorite()
+        {
+            HeroFavorite tmp = await _localDatabaseService.GetFavoriteHeroFromId(Hero.Id);
+            if (tmp != null)
+            {
+                IsFavorite = true;
+            }
         }
 
         public ICommand OpenComicsUrlCommand => new Command<object>((item) =>
@@ -61,7 +72,16 @@ namespace Marvel.ViewModels
 
         public ICommand AddRemoveFavoriteCommand => new Command(async () =>
         {
-            return;
+            if (IsFavorite == false)
+            {
+                IsFavorite = true;
+                await _localDatabaseService.AddFavoriteHero(Hero);
+            }
+            else
+            {
+                IsFavorite = false;
+                await _localDatabaseService.RemoveFavoriteHero(Hero);
+            }
         });
     }
 }

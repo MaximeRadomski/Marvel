@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Marvel.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,7 +14,8 @@ namespace Marvel.Views
 	{
 		public FavPage ()
 		{
-			InitializeComponent ();
+		    BindingContext = new FavPageModel(Navigation);
+            InitializeComponent ();
 		}
 	}
 }
