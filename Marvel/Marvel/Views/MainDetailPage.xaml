@@ -6,7 +6,7 @@
              x:Class="Marvel.Views.MainDetailPage"
              Title="Heroes">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Icon="IconAbc.png" Priority="0" Order="Primary" Command="{Binding SearchByNameEnableCommand}"/>
+        <ToolbarItem Text="A-Z" Priority="0" Order="Primary" Command="{Binding SearchByNameEnableCommand}"/>
     </ContentPage.ToolbarItems>
     <ContentView>
         <StackLayout Padding="0">

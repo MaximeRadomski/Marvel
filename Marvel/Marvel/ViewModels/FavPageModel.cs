@@ -7,6 +7,7 @@ using Marvel.Models;
 using Marvel.Services;
 using Marvel.Views;
 using Xamarin.Forms;
+using Autofac;
 
 namespace Marvel.ViewModels
 {
@@ -20,9 +21,9 @@ namespace Marvel.ViewModels
 
         public FavPageModel(INavigation navigation)
         {
-            _localDatabaseService = new LocalDatabaseService();
+            _localDatabaseService = App.Container.Resolve<ILocalDatabaseService>();
             _navigation = navigation;
-            Task.Run(async () => await LoadItems());
+            //Task.Run(async () => await LoadItems());
         }
 
         public async Task LoadItems()

@@ -13,6 +13,7 @@ using System.Windows.Input;
 using Marvel.Services;
 using Marvel.Views;
 using Xamarin.Forms;
+using Autofac;
 
 namespace Marvel.ViewModels
 {
@@ -32,7 +33,7 @@ namespace Marvel.ViewModels
 
         public MainDetailPageModel(INavigation navigation)
         {
-            _restService = new RestService();
+            _restService = App.Container.Resolve<IRestService>();
             _navigation = navigation;
             ResetStartAndLimit();
             SearchName = null;

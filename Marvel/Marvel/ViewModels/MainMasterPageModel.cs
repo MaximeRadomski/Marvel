@@ -21,8 +21,6 @@ namespace Marvel.ViewModels
                 });
         }
 
-        public new INavigation Navigation { get; set; }
-
         public ICommand ItemClickCommand => new Command<object>(async (item) =>
         {
             var id = ((MainPageMenuItem)item).Id;

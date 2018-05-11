@@ -14,6 +14,7 @@ namespace Marvel.Views
     {
         public MainPage()
         {
+            Detail = new NavigationPage(new MainDetailPage());
             InitializeComponent();
         }
     }

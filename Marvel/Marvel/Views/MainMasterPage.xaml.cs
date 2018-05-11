@@ -21,7 +21,6 @@ namespace Marvel.Views
         public MainPageMaster()
         {
             MainMasterPageModel pm = new MainMasterPageModel();
-            pm.Navigation = Navigation;
             BindingContext = pm;
             InitializeComponent();
         }

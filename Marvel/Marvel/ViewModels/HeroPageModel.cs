@@ -7,6 +7,7 @@ using Marvel.Models;
 using Marvel.Services;
 using Marvel.Views;
 using Xamarin.Forms;
+using Autofac;
 
 namespace Marvel.ViewModels
 {
@@ -24,8 +25,8 @@ namespace Marvel.ViewModels
 
         public HeroPageModel(INavigation navigation, int heroId)
         {
-            _restService = new RestService();
-            _localDatabaseService = new LocalDatabaseService();
+            _restService = App.Container.Resolve<IRestService>();
+            _localDatabaseService = App.Container.Resolve<ILocalDatabaseService>();
             _navigation = navigation;
             _heroId = heroId;
             Task.Run(async () => await LoadItems());

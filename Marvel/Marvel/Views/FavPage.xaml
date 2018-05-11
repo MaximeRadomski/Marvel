@@ -12,7 +12,7 @@
                 <ActivityIndicator Color="#Af1212" IsRunning="{Binding Loading}" IsVisible="{Binding Loading}" HorizontalOptions="Center" VerticalOptions="Center" />
             </StackLayout>
             <!--LIST-->
-            <controls:BetterListView ItemsSource="{Binding Heroes}" HorizontalOptions="Fill" VerticalOptions="Fill" RowHeight="100"
+            <controls:BetterListView ItemsSource="{Binding Heroes}" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" RowHeight="100"
                                      IsVisible="{Binding Loading, Converter={converters:NegateBooleanConverter}}"
                                      ItemClickCommand="{Binding PushHeroDetailsCommand}">
                 <ListView.ItemTemplate>

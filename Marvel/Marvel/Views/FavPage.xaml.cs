@@ -17,5 +17,11 @@ namespace Marvel.Views
 		    BindingContext = new FavPageModel(Navigation);
             InitializeComponent ();
 		}
-	}
+
+        protected override void OnAppearing()
+        {
+            Task.Run(async () => await ((FavPageModel)BindingContext).LoadItems());
+            base.OnAppearing();
+        }
+    }
 }
