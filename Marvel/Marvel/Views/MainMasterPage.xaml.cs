@@ -16,8 +16,6 @@ namespace Marvel.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPageMaster : ContentPage
     {
-        public ListView ListView;
-
         public MainPageMaster()
         {
             MainMasterPageModel pm = new MainMasterPageModel();
